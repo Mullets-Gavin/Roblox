@@ -5,7 +5,9 @@
 
 --// logic
 local Thumbnail = {}
-Thumbnail.Cache = {}
+Thumbnail.HeadshotCache = {}
+Thumbnail.AvatarCache = {}
+Thumbnail.BustCache = {}
 
 --// services
 local LoadLibrary = require(game:GetService('ReplicatedStorage'):WaitForChild('PlayingCards'))
@@ -16,7 +18,7 @@ end})
 
 --// functions
 function Thumbnail.Headshot(id,size)
-	if not Thumbnail.Cache[id] then
+	if not Thumbnail.HeadshotCache[id] then
 		local timeout = tick()
 		local pic,ready
 		repeat 
@@ -25,18 +27,18 @@ function Thumbnail.Headshot(id,size)
 				pic,ready = Services['Players']:GetUserThumbnailAsync(id,Enum.ThumbnailType.HeadShot,size)
 				end)
 			if success then
-				Thumbnail.Cache[id] = pic
+				Thumbnail.HeadshotCache[id] = pic
 			end
 		until ready or tick() - timeout >= 5
 	end
-	if not Thumbnail.Cache[id] then
+	if not Thumbnail.HeadshotCache[id] then
 		return 'http://www.roblox.com/asset/?id=3143448237'
 	end
-	return Thumbnail.Cache[id]
+	return Thumbnail.HeadshotCache[id]
 end
 	
 function Thumbnail.Avatar(id,size)
-	if not Thumbnail.Cache[id] then
+	if not Thumbnail.AvatarCache[id] then
 		local timeout = tick()
 		local pic,ready
 		repeat 
@@ -45,18 +47,18 @@ function Thumbnail.Avatar(id,size)
 				pic,ready = Services['Players']:GetUserThumbnailAsync(id,Enum.ThumbnailType.AvatarThumbnail,size)
 				end)
 			if success then
-				Thumbnail.Cache[id] = pic
+				Thumbnail.AvatarCache[id] = pic
 			end
 		until ready or tick() - timeout >= 5
 	end
-	if not Thumbnail.Cache[id] then
+	if not Thumbnail.AvatarCache[id] then
 		return 'http://www.roblox.com/asset/?id=3143448237'
 	end
-	return Thumbnail.Cache[id]
+	return Thumbnail.AvatarCache[id]
 end
 
 function Thumbnail.Bust(id,size)
-	if not Thumbnail.Cache[id] then
+	if not Thumbnail.BustCache[id] then
 		local timeout = tick()
 		local pic,ready
 		repeat 
@@ -65,14 +67,14 @@ function Thumbnail.Bust(id,size)
 				pic,ready = Services['Players']:GetUserThumbnailAsync(id,Enum.ThumbnailType.AvatarBust,size)
 				end)
 			if success then
-				Thumbnail.Cache[id] = pic
+				Thumbnail.BustCache[id] = pic
 			end
 		until ready or tick() - timeout >= 5
 	end
-	if not Thumbnail.Cache[id] then
+	if not Thumbnail.BustCache[id] then
 		return 'http://www.roblox.com/asset/?id=3143448237'
 	end
-	return Thumbnail.Cache[id]
+	return Thumbnail.BustCache[id]
 end
 
 return Thumbnail
