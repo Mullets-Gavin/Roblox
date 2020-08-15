@@ -11,6 +11,17 @@ Numbers.Suffixes = {'k','M','B','T','qd','Qn','sx','Sp','O','N','de','Ud','DD','
 	'qdQGNT','QnQGNT','sxQGNT','SpQGNT', 'OQQGNT','NQQGNT','SXGNTL'}
 
 --// functions
+function Numbers.formatValue(input)
+	local format, remain = tonumber(input)
+	while true do
+		format, remain = string.gsub(format,'^(-?%d+)(%d%d%d)','%1,%2')
+		if remain == 0 then
+			break
+		end
+	end
+	return format
+end
+
 function Numbers.formatMoney(input)
 	local Negative = input < 0
 	input = math.abs(input)
