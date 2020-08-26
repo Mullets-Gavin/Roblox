@@ -28,7 +28,7 @@ function Info:Update()
 	Info.Updated = GetInfo['Updated']
 	if Info.Updated ~= Info.Version then
 		Info.Outdated = true
-		warn('[INFORMATION]: This server is outdated. Server Version:',Info.Server,'| Game Version:',Info.Updated)
+		warn('[INFORMATION]: This server is outdated. Server Version:',Info.Version,'| Game Version:',Info.Updated)
 	end
 	for index,connections in pairs(Info.Connections) do
 		connections(Info.Outdated)
