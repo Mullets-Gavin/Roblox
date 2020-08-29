@@ -49,13 +49,14 @@ end
 
 function Numbers.formatClock(input)
 	local seconds = tonumber(input)
-
+	
 	if seconds <= 0 then
-		return '0:00';
+		return '00:00:00';
 	else
-		local mins = string.format('%01.f', math.floor(seconds / 60));
-		local secs = string.format('%02.f', math.floor(seconds - mins * 60));
-		return mins.. ':' ..secs
+		local hours = string.format('%02.f', math.floor(seconds/3600));
+		local mins = string.format('%02.f', math.floor(seconds/60 - (hours*60)));
+		local secs = string.format('%02.f', math.floor(seconds - hours*3600 - mins *60));
+		return hours..':'..mins..':'..secs
 	end
 end
 
