@@ -51,6 +51,18 @@ function Numbers.formatClock(input)
 	local seconds = tonumber(input)
 	
 	if seconds <= 0 then
+		return '0:00';
+	else
+		local mins = string.format('%01.f', math.floor(seconds / 60));
+		local secs = string.format('%02.f', math.floor(seconds - mins * 60));
+		return mins..':'..secs
+	end
+end
+
+function Numbers.format24H(input)
+	local seconds = tonumber(input)
+	
+	if seconds <= 0 then
 		return '00:00:00';
 	else
 		local hours = string.format('%02.f', math.floor(seconds/3600));
