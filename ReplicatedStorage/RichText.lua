@@ -48,7 +48,9 @@
 		:Font(false)
 		:Underline(false)
 		:Strike(true)
+		:Color(Color3.fromRGB(255, 0, 4))
 		:Append(' this is so cool')
+		:Color(false)
 		:Strike(false)
 		:Size(false)
 --]]
@@ -82,7 +84,7 @@ function RichText:Append(value)
 	if typeof(value) == 'string' then
 		table.insert(self._raw,value)
 	elseif typeof(value) == 'table' then
-		if not value._richtext then return end
+		if not value._richtext then return self end
 		for index,format in ipairs(value._raw) do
 			table.insert(self._raw,format)
 		end
@@ -155,9 +157,9 @@ function RichText:Font(name)
 	assert(typeof(name) == 'string' or 'EnumItem' or 'boolean',"':Font' A name or EnumItem or false must be defined to correctly format Rich Text")
 	
 	if typeof(name) == 'string' then
-		table.insert(self._raw,'<font face="'..name..'">')
+		table.insert(self._raw,'<font face="'.. name ..'">')
 	elseif typeof(name) == 'EnumItem' then
-		table.insert(self._raw,'<font face="'..name.Name..'">')
+		table.insert(self._raw,'<font face="'.. name.Name ..'">')
 	elseif not name then
 		table.insert(self._raw,'</font>')
 	end
@@ -169,7 +171,7 @@ function RichText:Size(number)
 	assert(typeof(number) == 'number' or 'boolean',"':Size' A number or false must be defined to correctly format Rich Text")
 	
 	if typeof(number) == 'number' then
-		table.insert(self._raw,'<font size="'..number..'">')
+		table.insert(self._raw,'<font size="'.. number ..'">')
 	elseif not number then
 		table.insert(self._raw,'</font>')
 	end
