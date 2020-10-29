@@ -39,7 +39,8 @@ local Claimed = {}
 local Chances = {
 	['Premium'] = 10; -- 10% chance to get premium
 	['Group'] = 10; -- 10% chance to be in a group
-	['Friend'] = 20; -- 20% chance to be a local player friend
+	['Friend'] = 10; -- 20% chance to be a local player friend
+	['Block'] = 5; -- 5% chance to block the local player
 	['AccountAge'] = Vector2.new(1,3650); -- the randomization min/max for account age (10 years max)
 }
 
@@ -122,6 +123,10 @@ local function GetFriendship()
 	return math.random() <= Chances.Friend/100 and true or false
 end
 
+local function GetBlocked()
+	return math.random() <= Chances.Block/100 and true or false
+end
+
 function PlayerClass.generate(num)
 	num = num or 1
 	
@@ -135,8 +140,10 @@ function PlayerClass.generate(num)
 		local team = GetTeam()
 		local group = GetGroup()
 		local friend = GetFriendship()
+		local block = GetBlocked()
 		
 		local plr = PlayerClass.new({
+			-- properties
 			['Name'] = name;
 			['DisplayName'] = display;
 			['UserId'] = id;
@@ -146,11 +153,15 @@ function PlayerClass.generate(num)
 			['TeamColor'] = team.TeamColor;
 			['Neutral'] = team.TeamNeutral;
 			
+			-- groups
 			['Groups'] = {
 				[group.GroupId] = group.GroupRole
 			};
 			['Friends'] = {
 				[Player.UserId] = friend;
+			};
+			['Blocks'] = {
+				[Player.UserId] = block;
 			};
 		})
 		
@@ -175,11 +186,16 @@ function PlayerClass.new(props)
 		-- groups
 		['Groups'] = props['Groups'] or {};
 		['Friends'] = props['Friends'] or {};
+		['Blocks'] = props['Blocks'] or {};
 	},PlayerClass)
 end
 
 function PlayerClass:IsFriendsWith(userId)
 	return self.Friends[userId]
+end
+
+function PlayerClass:IsBlockedWith(userId)
+	return self.Blocks[userId]
 end
 
 function PlayerClass:IsInGroup(groupId)
