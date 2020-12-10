@@ -45,6 +45,8 @@ MCS('string')
 ```
 
 ## Component Documentation
+Components are passed within the function connected to `MCS:Create(tag, func)` [ `MCS(tag, func)` ]
+
 Standard API:
 
 ```lua
@@ -64,8 +66,7 @@ component:Set('string', variant)
     -- Set a variant on an already existing ValueBase or create an attribute
 
 component:Update('string', variant)
-    -- Similar to :Set, this API will increment numbers but set everything else & requires
-    the state to already be existing
+    -- Similar to :Set, this API will increment numbers but set everything else & requires the state to already be existing
 
 component:Attribute('string', function)
     --[[
@@ -81,8 +82,7 @@ component:Connect(GuiObject, 'string', function)
     end)
 
 component:Lifecycle('name', function)
-    -- This Lifecycle method binds a function to RenderStepped & runs the code as long as the
-    element is Visible = true
+    -- This Lifecycle method binds a function to RenderStepped & runs the code as long as the element is Visible = true
 
 component('string')
     -- See component:Get
