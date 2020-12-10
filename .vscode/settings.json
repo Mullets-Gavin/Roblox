@@ -1,0 +1,7 @@
+{
+    "Lua.diagnostics.disable": [
+        "incorrect-call-arguments",
+        "unused-local",
+        "undefined-rbx-member"
+    ]
+}

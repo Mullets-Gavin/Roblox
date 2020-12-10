@@ -1,0 +1,5 @@
+std = "roblox"
+base = "lua52"
+
+[rules]
+unused_variable = "allow"
