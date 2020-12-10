@@ -120,9 +120,12 @@ end
 ]=]
 function Components:Fire(name: string, ...): nil
 	assert(Components._Bindings[name],"Attempted to fire a non-existant binding on '"..name.."'")
-	
+    
+    local data = {...}
 	local code = Components._Bindings[name]
-	coroutine.wrap(code,...)
+	coroutine.wrap(function()
+        code(table.unpack(data))
+    end)
 end
 
 --[=[
@@ -194,13 +197,17 @@ function Components:Attribute(name: string, code: (any, any) -> nil): RBXScriptC
 	
 	assert(last ~= nil,Components._Error.."Attempted to bind to nil attribute '"..name.."'")
 	
-	coroutine.wrap(code,last,last)
+    coroutine.wrap(function()
+        code(last,last)
+    end)
 	
 	local obj = self.config:FindFirstChild(name)
 	local signal; do
 		if obj then
 			signal = obj.Changed:Connect(function(new)
-				coroutine.wrap(code,new,last)
+				coroutine.wrap(function()
+                    code(new,last)
+                end)
 				
 				last = new
 			end)
@@ -208,7 +215,9 @@ function Components:Attribute(name: string, code: (any, any) -> nil): RBXScriptC
 			signal = self.config:GetAttributeChangedSignal(name):Connect(function()
 				local new = self:Get(name)
 				
-				coroutine.wrap(code,new,last)
+				coroutine.wrap(function()
+                    code(new,last)
+                end)
 				
 				last = new
 			end)

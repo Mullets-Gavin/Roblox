@@ -132,7 +132,7 @@ Animator['BounceUp'] = function(element: GuiObject): nil
 	
 	local tween = Tween(element,{'Position'},{goal},Length)
 	tween.Completed:Wait()
-	local tween = Tween(element,{'Position'},{original.Position},Length)
+	tween = Tween(element,{'Position'},{original.Position},Length)
 	tween.Completed:Wait()
 end
 
@@ -150,7 +150,7 @@ Animator['BounceDown'] = function(element: GuiObject): nil
 	
 	local tween = Tween(element,{'Position'},{goal},Length)
 	tween.Completed:Wait()
-	local tween = Tween(element,{'Position'},{original.Position},Length)
+	tween = Tween(element,{'Position'},{original.Position},Length)
 	tween.Completed:Wait()
 end
 
