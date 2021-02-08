@@ -45,7 +45,7 @@ local DataStoreService = game:GetService("DataStoreService")
 local Secrets = {}
 Secrets.__index = Secrets
 
-local function LoadDataStore(name): boolean | GlobalDataStore
+local function LoadDataStore(name: string): boolean | GlobalDataStore
 	local success, response = pcall(function()
 		return DataStoreService:GetDataStore(name, name)
 	end)
@@ -57,7 +57,7 @@ local function LoadDataStore(name): boolean | GlobalDataStore
 	return false
 end
 
-local function SetStoreKey(store, name, token): boolean
+local function SetStoreKey(store: typeof(LoadDataStore()), name: string, token: string): boolean
 	local success, _ = pcall(function()
 		return store:SetAsync(name, token)
 	end)
@@ -65,7 +65,7 @@ local function SetStoreKey(store, name, token): boolean
 	return success
 end
 
-local function GetStoreKey(store, name): boolean | string
+local function GetStoreKey(store: typeof(LoadDataStore()), name: string): boolean | string
 	local success, response = pcall(function()
 		return store:GetAsync(name)
 	end)
@@ -77,7 +77,7 @@ local function GetStoreKey(store, name): boolean | string
 	return false
 end
 
-function Secrets.new(name): boolean | typeof(Secrets.new())
+function Secrets.new(name: string): boolean | typeof(Secrets.new())
 	local store = LoadDataStore(name)
 
 	if store then
